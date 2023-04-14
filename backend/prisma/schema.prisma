@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma" //데이터베이스 특징때문에 이 코드를 작성.(외워도되는 고정코드.)
+}
+
+model User {
+  id Int @id @default(autoincrement()) // id 는 @id로 작성해야함. @unique 안됨. / @default(autoincrement()) 추가하면 뒤 내용이 자동으로 정해짐.
+  account String @unique // 유니크를 중복된 값을 못받게 함. 
+  name String? // 반드시 값이 있어야 하면 그냥 작성해도되지만 비어있어도되면 ?(null)을 붙임.
+  todos Todo[] // 1입장에서는 todo를 여러게 가질수 있다 라는 정의를 내린것.(todo를 열어보면 아래 model todo의 내용들이 들어있음.)
+  createdAt DateTime @default(now()) // DateTime는 시간값에 대한 형식 , @default(now())는 생성되는순간 그 시간을 createAt 시간으로 저장
+  updatedAt DateTime @updatedAt // 업데이트가 이루어질때마다 시간을 갱신.
+}
+
+model Todo {
+  id Int @id @default(autoincrement())
+  todo String
+  isDone Boolean // Boolean은 참이랑 거짓 두가지값만 담을 수 있는것.
+  user User @relation(fields: [userId], references: [id])// 두번째 아이디는 유저의 아이디 지칭. 유저의 아이디를 가져와서 쓰겠다는 뜻. 유저,타입,유저아이디를 참조하겠다,
+  userId Int // references: [id]를 통해 유저아이디를 가져와 쓰겠다라는 관계를 정의하기 위해 필요.
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @updatedAt
+
+  @@index([userId]) // mysQL을 쓰면 관계설정을 위해 작성해줘야함. index가 검색효율을 증가시키는 역할을 함.
+}
