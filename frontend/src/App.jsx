@@ -64,7 +64,7 @@ function App() {
       <h1 className="text-4xl font-bold flex items-center">
         {user.account}님 환영합니다~ 😎
         <button
-          className="ml-4 px-2 py-1 bg-pink-200 hover:bg-pink-400 rounded-lg text-gray-50 text-base"
+          className="ml-4 px-2 py-1 bg-green-200 hover:bg-green-400 rounded-lg text-gray-50 text-base"
           onClick={onClickLogOut}
         >
           로그아웃
@@ -83,7 +83,7 @@ function App() {
       </div>
       <div className="mt-16">
         <button
-          className="ml-4 px-4 py-2 w-24 h-24 bg-pink-200 hover:bg-pink-400 rounded-full text-gray-50 text-2xl"
+          className="ml-4 px-4 py-2 w-24 h-24 bg-green-200 hover:bg-green-400 rounded-full text-gray-50 text-2xl"
           onClick={onClickReload}
         >
           갱 신

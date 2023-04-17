@@ -49,19 +49,19 @@ const TodoCard = ({ todo, isDone, id, userId, todos, setTodos }) => {
       {todoIsDone ? (
         <>
           <button className="relative" onClick={onClickDone}>
-            <div className="border-4 border-pink-400 w-8 h-8 rounded-xl bg-pink-400 p-2"></div>
-            <div className="absolute border-4 border-white top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-8 h-8 scale-75 rounded-xl bg-pink-400 p-2"></div>
+            <div className="border-4 border-green-400 w-8 h-8 rounded-xl bg-green-400 p-2"></div>
+            <div className="absolute border-4 border-white top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-8 h-8 scale-75 rounded-xl bg-green-400 p-2"></div>
           </button>
         </>
       ) : (
         <button
-          className="border-4 border-pink-400 w-8 h-8 rounded-xl"
+          className="border-4 border-green-400 w-8 h-8 rounded-xl"
           onClick={onClickDone}
         ></button>
       )}
       <div className="text-2xl ml-4 truncate">{todo}</div>
       <button
-        className="ml-4 hover:text-pink-400 hover:scale-125 ease-linear duration-300"
+        className="ml-4 hover:text-green-400 hover:scale-125 ease-linear duration-300"
         onClick={onClickDelete}
       >
         <FiTrash2 size={24} />
