@@ -8,13 +8,14 @@ const client = new PrismaClient(); //새로운 생성자를 만든후에 client�
 //유저생성
 router.post("/", async (req, res) => {
   try {
-    const { account } = req.body;
+    const { account } = req.body; // body의 경우
 
     const existUser = await client.user.findUnique({
+      //await를 붙이지 않으면 pendding이 일어난다.
       where: {
         account,
       },
-    });
+    }); //존재하고 있는 유저가 있는지 확인해보고, 존재하는 유저가 있다면 아래 코드를 진행.
     if (existUser) {
       return res
         .status(400)
@@ -37,9 +38,10 @@ router.post("/", async (req, res) => {
 //유저조회
 router.get("/:account", async (req, res) => {
   try {
-    const { account } = req.params;
+    const { account } = req.params; // get요청에서 params자리에 body를 사용할 수 없다.
 
     const user = await client.user.findUnique({
+      //Unique를 사용하는 이유는 account가 유니크한 값을 가지고 있기 때문에.
       where: {
         account,
       },

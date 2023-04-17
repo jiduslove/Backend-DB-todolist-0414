@@ -24,11 +24,11 @@ router.post("/", async (req, res) => {
       where: {
         id: parseInt(userId),
       },
-    });
+    }); //유저가 없는 경우를 체크.
 
     if (!user) {
       return res.status(400).json({ ok: false, error: "Not exist user." });
-    }
+    } // 아이디가 실제 존재하는 아이디인지 체크.
 
     const newTodo = await client.todo.create({
       data: {
@@ -48,6 +48,7 @@ router.post("/", async (req, res) => {
 router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
+    const { skip } = req.query;
 
     const user = await client.user.findUnique({
       where: {
@@ -56,6 +57,7 @@ router.get("/:userId", async (req, res) => {
     });
 
     if (!user) {
+      // 여기 작성된 user는 DB에서 조회한것. userId는 클라이언트에서.
       return res.status(400).json({ ok: false, error: "Not exist user." });
     }
 
@@ -63,6 +65,12 @@ router.get("/:userId", async (req, res) => {
       where: {
         userId: parseInt(userId),
       },
+      orderBy: {
+        //생성된 시간 기준으로 투두를 가져오는 코드.
+        createdAt: "desc",
+      },
+      skip: parseInt(skip), // 변화되는 값.
+      take: 3, // 고정값.
     });
 
     res.json({ ok: true, todos });
@@ -92,9 +100,11 @@ router.put("/:id/done", async (req, res) => {
 
     const updatedTodo = await client.todo.update({
       where: {
+        // 조회할 데이터
         id: parseInt(id),
       },
       data: {
+        // 업데이트 할 데이터
         isDone: !existTodo.isDone,
       },
     });
